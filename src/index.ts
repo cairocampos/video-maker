@@ -1,26 +1,16 @@
-import readline from 'readline-sync'
 import { Content } from './types/content';
+import { robot as textRobot } from './robots/text'
+import { userInput } from './user-input';
+const robots = {
+  userInput,
+  text: textRobot
+}
 
-function start() {
-  const content: Content = {
-    searchTerm: "",
-    prefix: "",
-  }
+async function start() {
+  const content: Content = robots.userInput()
+  await robots.text(content)
 
-  content.searchTerm = askAndReturnSearchTerm();
-  content.prefix = askAndReturnPrefix();
-
-  function askAndReturnSearchTerm() {
-    return readline.question('Digite um termo de busca da Wikipedia: ');
-  }
-
-  function askAndReturnPrefix() {
-    const prefixes = ['Quem é', 'O que é', 'A história de']
-    const selectedPrefixIndex = readline.keyInSelect(prefixes, 'Escolha uma opção')
-    const selectedPrefixText = prefixes[selectedPrefixIndex];
-
-    return selectedPrefixText;
-  }
+  console.log(content)
 }
 
 start();
