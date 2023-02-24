@@ -2,11 +2,16 @@ import { Content } from "../types/content";
 import queryString from 'node:querystring'
 import { WikipediaResponse } from "../types/wikipedia-response";
 import sentenceBoundaryDetection from 'sbd'
+import watsonNlu from 'ibm-watson/natural-language-understanding/v1'
+import {IamAuthenticator} from 'ibm-watson/auth'
+import watsonNluCredentials from '../credentials/watson-nlu.json'
 
 export async function robot(content: Content) {
   await fetchContentFromWikipedia()
   sanitizeContent()
   breakContentIntoSentences()
+  limitMaximumSentences()
+  await fetchKeywordsOfAllSentences()
 
 
   async function fetchContentFromWikipedia(): Promise<void> {
@@ -52,5 +57,38 @@ export async function robot(content: Content) {
         images: []
       })
     })
+  }
+
+  function limitMaximumSentences() {
+    content.sentences = content.sentences.slice(0, content.maximumSentences)
+  }
+
+  async function fetchWatsonAndReturnKeywords(sentence: string): Promise<string[]> {
+    const client = new watsonNlu({
+      authenticator: new IamAuthenticator({apikey: watsonNluCredentials.apikey}),
+      version: '2018-04-05',
+      serviceUrl: watsonNluCredentials.url,
+    });
+  
+    const response = await client.analyze({
+      text: sentence,
+      features: {
+        keywords: {}
+      }
+    })
+
+    if(!response.result.keywords?.length) return [];
+
+    const keywords = response.result.keywords
+      .map(keyword => keyword?.text)
+      .filter(text => typeof text !== undefined);
+
+    return keywords as string[]
+  }
+
+  async function fetchKeywordsOfAllSentences() {
+    for await (const sentence of content.sentences) {
+      sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text)
+    }
   }
 }

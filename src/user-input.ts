@@ -7,7 +7,8 @@ export function userInput(): Content {
     prefix: "",
     sourceContentOriginal: "",
     sourceContentSanitized: "",
-    sentences: []
+    sentences: [],
+    maximumSentences: 7
   }
   content.searchTerm = askAndReturnSearchTerm();
   content.prefix = askAndReturnPrefix(content.searchTerm);
