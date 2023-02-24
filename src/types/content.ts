@@ -10,4 +10,5 @@ export type Content = {
   sourceContentOriginal:string;
   sourceContentSanitized: string,
   sentences: Sentence[]
+  maximumSentences: number
 }
