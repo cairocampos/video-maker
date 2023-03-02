@@ -1,7 +1,8 @@
 type Sentence = {
   text:string;
   keywords: string[],
-  images: []
+  images: string[]
+  googleSearchQuery:string
 }
 
 export type Content = {
