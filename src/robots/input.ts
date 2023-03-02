@@ -2,7 +2,7 @@ import readline from 'readline-sync'
 import { Content } from "../types/content";
 import * as state from  '../robots/state'
 
-export function input(): Content {
+export function input() {
   const content: Content = {
     searchTerm: "",
     prefix: "",
@@ -26,6 +26,4 @@ export function input(): Content {
 
     return selectedPrefixText;
   }
-
-  return content
 }

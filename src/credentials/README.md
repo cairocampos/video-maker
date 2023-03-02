@@ -13,3 +13,13 @@ File: `watson-nlu.json`
   "url": "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/6e33c8ae-60e5-435f-bd08-611f5f99bd52"
 }
 ```
+
+## Google Search API
+
+File: `google-search.json`
+```
+{
+  "apiKey": "AIzaSyA4Ath99HKMhHw_aJpgzFoz8nuEN8rN64s",
+  "searchEngineId": "c13785ef7893042fb"
+}
+```
