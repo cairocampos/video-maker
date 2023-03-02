@@ -1,7 +1,8 @@
 import readline from 'readline-sync'
-import { Content } from "./types/content";
+import { Content } from "../types/content";
+import * as state from  '../robots/state'
 
-export function userInput(): Content {
+export function input(): Content {
   const content: Content = {
     searchTerm: "",
     prefix: "",
@@ -12,6 +13,7 @@ export function userInput(): Content {
   }
   content.searchTerm = askAndReturnSearchTerm();
   content.prefix = askAndReturnPrefix(content.searchTerm);
+  state.save(content);
 
   function askAndReturnSearchTerm() {
     return readline.question('Digite um termo de busca da Wikipedia: ');

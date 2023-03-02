@@ -5,13 +5,17 @@ import sentenceBoundaryDetection from 'sbd'
 import watsonNlu from 'ibm-watson/natural-language-understanding/v1'
 import {IamAuthenticator} from 'ibm-watson/auth'
 import watsonNluCredentials from '../credentials/watson-nlu.json'
+import * as state from './state'
 
-export async function robot(content: Content) {
+export async function robot() {
+  const content = state.load()
   await fetchContentFromWikipedia()
   sanitizeContent()
   breakContentIntoSentences()
   limitMaximumSentences()
   await fetchKeywordsOfAllSentences()
+
+  state.save(content)
 
 
   async function fetchContentFromWikipedia(): Promise<void> {
