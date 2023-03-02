@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/cairocampos/video-maker#readme",
   "devDependencies": {
+    "@types/gm": "^1.25.0",
     "@types/node": "^18.14.1",
     "@types/readline-sync": "^1.4.4",
     "@types/sbd": "^1.0.3",
@@ -26,6 +27,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "gm": "^1.25.0",
     "googleapis": "^112.0.0",
     "ibm-watson": "^7.1.2",
     "image-downloader": "^4.3.0",

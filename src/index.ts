@@ -1,13 +1,13 @@
 import { Content } from './types/content';
 import { robot as textRobot } from './robots/text'
-import { robot as imageRoboto } from './robots/image'
+import { robot as imageRobot } from './robots/image'
 import { input } from './robots/input';
 import * as state from  './robots/state'
 
 const robots = {
   input,
   text: textRobot,
-  image: imageRoboto,
+  image: imageRobot,
   state
 }
 
