@@ -1,17 +1,20 @@
 import { Content } from './types/content';
 import { robot as textRobot } from './robots/text'
-import { userInput } from './user-input';
+import { input } from './robots/input';
+import * as state from  './robots/state'
 
 const robots = {
-  userInput,
-  text: textRobot
+  input,
+  text: textRobot,
+  state
 }
 
 async function start() {
-  const content: Content = robots.userInput()
-  await robots.text(content)
+  robots.input()
+  await robots.text()
 
-  console.log(JSON.stringify(content, null, 4))
+  const content = robots.state.load()
+  console.dir(content, {depth: null})
 }
 
 start();
