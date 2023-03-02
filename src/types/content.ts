@@ -12,4 +12,5 @@ export type Content = {
   sourceContentSanitized: string,
   sentences: Sentence[]
   maximumSentences: number
+  downloadedImages?: string[]
 }
