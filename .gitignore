@@ -108,3 +108,5 @@ src/credentials/**.json
 content.json
 
 **/content/*.png
+
+youtube-thumbnail.jpg
