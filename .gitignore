@@ -108,5 +108,8 @@ src/credentials/**.json
 content.json
 
 **/content/*.png
-
+**/content/*.mov
+**/content/*.js
+template.aep Logs
+Adobe After Effects Auto Save
 youtube-thumbnail.jpg
