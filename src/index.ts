@@ -15,13 +15,11 @@ const robots = {
 }
 
 async function start() {
-  // robots.input()
-  // await robots.text()
-  // await robots.image()
+  robots.input();
+  await robots.text();
+  await robots.image();
+  await robots.video();
   await robots.youtube();
-
-  // const content = robots.state.load()
-  // console.dir(content, {depth: null})
 }
 
 start();
