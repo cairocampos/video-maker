@@ -9,6 +9,7 @@ import fs from 'node:fs'
 const youtube = google.youtube({version: 'v3'})
 
 export async function robot() {
+  console.log(`> [youtube-robot] Starting... `)
   const content = state.load();
   await authenticateWithOAuth();
   const videoInformation = await uploadVideo()
@@ -29,7 +30,7 @@ export async function robot() {
         const port = 3000;
         const app = express();
         const server = app.listen(port)
-          .on('listening', () => console.log(`> Server is running`))
+          .on('listening', () => console.log(`> [youtube-robot] Server is running`))
 
         return resolve({
           app,
@@ -53,12 +54,12 @@ export async function robot() {
         scope: "https://www.googleapis.com/auth/youtube"
       })
 
-      console.log(`> Give consent: ${url}`)
+      console.log(`> [youtube-robot] Give consent: ${url}`)
     }
 
     async function waitForGoogleCallback(webServer: {app: Express, server: Server}): Promise<string> {
       return new Promise((resolve, reject) => {
-        console.log('> Waiting for user consent...')
+        console.log('> [youtube-robot] Waiting for user consent...')
         webServer.app.get('/callback', (req, res) => {
           const code = req.query.code as string;
           res.send('<h1>Thank you!</h1><p>Now close this tab.</p>')
@@ -118,16 +119,17 @@ export async function robot() {
       }
     }
 
+    console.log(`> [youtube-robot] Starting to upload video to YouTube...`)
     const youtubeResponse = await youtube.videos.insert(requestParameters, {
       onUploadProgress: onUploadProgress
     })
 
-    console.log(`> Video available at: https://youtu.be/${youtubeResponse.data.id}`)
+    console.log(`> [youtube-robot] Video available at: https://youtu.be/${youtubeResponse.data.id}`)
     return youtubeResponse.data;
 
     function onUploadProgress(event: any) {
       const progress = Math.round((event.bytesRead / videoFileSize) * 100) 
-      console.log(`> ${progress}% completed`)
+      console.log(`> [youtube-robot] ${progress}% completed`)
     }
   }
 
@@ -142,6 +144,6 @@ export async function robot() {
         body: fs.createReadStream(videoThumbnailFilePath)
       }
     })
-    console.log('> Thumbnail uploaded!')
+    console.log('> [youtube-robot] Thumbnail uploaded!')
   }
 }
