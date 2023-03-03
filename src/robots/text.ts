@@ -8,6 +8,7 @@ import watsonNluCredentials from '../credentials/watson-nlu.json'
 import * as state from './state'
 
 export async function robot() {
+  console.log('> [tetx-robot] Starting...')
   const content = state.load()
   await fetchContentFromWikipedia()
   sanitizeContent()
@@ -19,6 +20,8 @@ export async function robot() {
 
 
   async function fetchContentFromWikipedia(): Promise<void> {
+  console.log('> [text-robot] Fetching content from wikipedia...')
+
     const query = queryString.stringify({
       action: 'query',
       prop: 'extracts',
@@ -34,6 +37,7 @@ export async function robot() {
     const data: WikipediaResponse = await response.json();
     const wikipediaContent = data.query.pages[0].extract;
     content.sourceContentOriginal = wikipediaContent;
+    console.log('> [text-robot] Fetching done!')
   }
 
   function sanitizeContent() {
@@ -92,8 +96,11 @@ export async function robot() {
   }
 
   async function fetchKeywordsOfAllSentences() {
+    console.log('> [text-robot] Starting to fetch keywords from Watson!')
     for await (const sentence of content.sentences) {
+      console.log(`> [text-robot] Sentence: ${sentence.text}`)
       sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text)
+      console.log(`> [text-robot] Keywords: ${sentence.keywords.join(', ')}\n`)
     }
   }
 }
