@@ -1,24 +1,25 @@
-import { input } from './robots/input';
-import * as state from  './robots/state'
 import { robot as textRobot } from './robots/text'
 import { robot as imageRobot } from './robots/image'
+import { robot as youtubeRobot } from './robots/youtube'
 import { robot as videoRobot } from './robots/image'
+import { input } from './robots/input';
+import * as state from  './robots/state'
 
 const robots = {
+  state,
   input,
   text: textRobot,
   image: imageRobot,
+  youtube: youtubeRobot,
   video: videoRobot,
-  state
 }
 
 async function start() {
-  robots.input()
-  await robots.text()
-  await robots.image()
-
-  const content = robots.state.load()
-  console.dir(content, {depth: null})
+  robots.input();
+  await robots.text();
+  await robots.image();
+  await robots.video();
+  await robots.youtube();
 }
 
 start();
